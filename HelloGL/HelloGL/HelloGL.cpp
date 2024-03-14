@@ -68,7 +68,6 @@ void HelloGL::DrawScalene()
 		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
 
 		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(-0.5, 0.3);	//	TOP right
 		glVertex2f(0.5, -0.6);	//	BOTTOM right
 		glVertex2f(-0.7, -0.6);	// BOTTOM left
 		glEnd();
@@ -82,7 +81,6 @@ void HelloGL::DrawIsosceles()
 		glColor4f(0.5f, 1.0f, 0.5f, 0.0f);
 
 		glVertex2f(0, 0.7);	//	TOP left
-		glVertex2f(0, 0.7);	//	TOP right
 		glVertex2f(0.5, -0.6);	//	BOTTOM right
 		glVertex2f(-0.5, -0.6);	// BOTTOM left
 		glEnd();
@@ -96,7 +94,6 @@ void HelloGL::DrawEquilateral()
 		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
 
 		glVertex2f(0.0, 0.3);	//	TOP left
-		glVertex2f(0.0, 0.3);	//	TOP right
 		glVertex2f(0.5, -0.5);	//	BOTTOM right
 		glVertex2f(-0.5, -0.5);	// BOTTOM left
 		glEnd();
@@ -110,7 +107,6 @@ void HelloGL::DrawAcute()
 		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
 
 		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(-0.5, 0.3);	//	TOP right
 		glVertex2f(0.5, -0.6);	//	BOTTOM right
 		glVertex2f(-0.7, -0.6);	// BOTTOM left
 		glEnd();
@@ -124,7 +120,6 @@ void HelloGL::DrawRight()
 		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
 
 		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(-0.5, 0.3);	//	TOP right
 		glVertex2f(0.5, -0.6);	//	BOTTOM right
 		glVertex2f(-0.5, -0.6);	// BOTTOM left
 		glEnd();
@@ -138,7 +133,6 @@ void HelloGL::DrawObtuse()
 		glColor4f(0.5f, 0.5f, 1.0f, 0.0f);
 
 		glVertex2f(-0.7, 0.3);	//	TOP left
-		glVertex2f(-0.7, 0.3);	//	TOP right
 		glVertex2f(0.6, -0.6);	//	BOTTOM right
 		glVertex2f(-0.4, -0.6);	// BOTTOM left
 		glEnd();
