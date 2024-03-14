@@ -14,19 +14,19 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	DrawPolygon();
+	//DrawPolygon();
 
-	DrawTriangle();
+	//DrawTriangle();
 
-	DrawScalene();
+	//DrawScalene();
 
-	DrawIsosceles();
+	//DrawIsosceles();
 
-	DrawEquilateral();
+	//DrawEquilateral();
 
-	DrawAcute();
+	//DrawAcute();
 
-	DrawRight();
+	//DrawRight();
 
 	DrawObtuse();
 
@@ -130,7 +130,7 @@ void HelloGL::DrawObtuse()
 {
 	glBegin(GL_POLYGON);
 	{
-		glColor4f(0.5f, 0.5f, 1.0f, 0.0f);
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
 		glVertex2f(-0.7, 0.3);	//	TOP left
 		glVertex2f(0.6, -0.6);	//	BOTTOM right
