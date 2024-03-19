@@ -1,7 +1,6 @@
-#include "GLUTCallbacks.h"
+
 
 #include "GLUTCallbacks.h"
-#include "HelloGL.h"
 
 namespace GLUTCallbacks
 {
@@ -22,4 +21,12 @@ namespace GLUTCallbacks
 			helloGL -> Display();
 		}
 	}
+
+	void Timer(int preferredRefresh)
+	{
+		helloGL -> Update();
+
+		glutTimerFunc(preferredRefresh, GLUTCallbacks::Timer, preferredRefresh);
+	}
+
 }

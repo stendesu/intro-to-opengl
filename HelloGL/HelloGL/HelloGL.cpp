@@ -2,10 +2,13 @@
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
+	rotation = 0.0f;
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutCreateWindow("Simple OpenGL Program");
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 	glutMainLoop();
 	glutInitWindowSize(800, 800);
 }
@@ -13,6 +16,16 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	RotateRectangle();
+	RotateTriangle();
+	RotateSquare();
+
+
+#pragma region draw triangles
+
+
 
 	//DrawPolygon();
 
@@ -28,10 +41,29 @@ void HelloGL::Display()
 
 	//DrawRight();
 
-	DrawObtuse();
+	//DrawObtuse();
+
+#pragma endregion
 
 	glFlush();
 }
+
+
+
+void HelloGL::Update()
+{
+	glutPostRedisplay();
+
+	rotation += 0.5f;
+
+	if (rotation >= 360.0f)
+	{
+		rotation = 0.0f;
+	}
+}
+
+
+#pragma region Draw triangle functions
 
 void HelloGL::DrawPolygon()
 {
@@ -138,6 +170,79 @@ void HelloGL::DrawObtuse()
 		glEnd();
 	}
 }
+#pragma endregion
+
+#pragma region rotate polygons
+
+void HelloGL::RotateRectangle()
+{
+	glPushMatrix();
+	glRotatef(rotation, 5.0f, 6.0f, 0.0f);
+
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+
+		glVertex2f(-0.4, 0.3);	//	TOP left
+		glVertex2f(0.4, 0.3);	//	TOP RIGHT
+		glVertex2f(0.4, -0.3);	//	BOTTOM right
+		glVertex2f(-0.4, -0.3);	// BOTTOM left
+
+		//glTranslatef(0, 1, 0);
+		glEnd();
+	}
+
+
+
+	glPopMatrix();
+
+
+}
+
+void HelloGL::RotateSquare()
+{
+	glPushMatrix();
+	glRotatef(rotation, 0.0f, 0.0f, -5.0f);
+
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+
+		glVertex2f(-0.9, 0.3);	//	TOP left
+		glVertex2f(-0.6, 0.3);	//	TOP RIGHT
+		glVertex2f(-0.6, -0.3);	//	BOTTOM right
+		glVertex2f(-0.9, -0.3);	// BOTTOM left
+		glEnd();
+	}
+	glPopMatrix();
+
+
+}
+
+void HelloGL::RotateTriangle()
+{
+	glPushMatrix();
+	glRotatef(rotation, 0.0f, 0.0f, 5.0f);
+
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(0.0f, 1.0f, 1.0f, 0.0f);
+
+		glVertex2f(0.6, 0.4);	//	TOP left
+		glVertex2f(0.8, -0.3);	//	BOTTOM right
+		glVertex2f(0.4, -0.3);	// BOTTOM left
+		glEnd();
+	}
+
+	glPopMatrix();
+
+
+}
+
+#pragma endregion
+
+
+
 
 HelloGL::~HelloGL(void)
 {
