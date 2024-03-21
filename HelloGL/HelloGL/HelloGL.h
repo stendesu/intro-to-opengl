@@ -21,6 +21,8 @@ public:
 
 	void Update();
 
+	void Keyboard(unsigned char key, int x, int y);
+
 #pragma region draw triangles
 
 	void DrawPolygon();
@@ -46,5 +48,7 @@ public:
 	void RotateTriangle();
 
 #pragma endregion
+
+
 };
 

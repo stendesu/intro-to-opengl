@@ -6,11 +6,15 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE);
+	glutInitWindowSize(800, 800);
+	glutInitWindowPosition(-1, 1);
 	glutCreateWindow("Simple OpenGL Program");
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutMainLoop();
-	glutInitWindowSize(800, 800);
+
 }
 
 void HelloGL::Display()
@@ -46,6 +50,7 @@ void HelloGL::Display()
 #pragma endregion
 
 	glFlush();
+	glutSwapBuffers();
 }
 
 
@@ -54,11 +59,25 @@ void HelloGL::Update()
 {
 	glutPostRedisplay();
 
-	rotation += 0.5f;
+	//rotation += 1.0f;
 
 	if (rotation >= 360.0f)
 	{
 		rotation = 0.0f;
+	}
+		
+	//Sleep(10);
+}
+
+void HelloGL::Keyboard(unsigned char key, int x, int y)
+{
+	if (key == 'd')
+	{
+		rotation += 1.0f;
+	}
+	else if (key == 'a')
+	{
+		rotation += -1.0f;
 	}
 }
 
