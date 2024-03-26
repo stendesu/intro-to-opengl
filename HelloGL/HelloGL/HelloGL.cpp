@@ -20,6 +20,11 @@ HelloGL::HelloGL(int argc, char* argv[])
 	gluPerspective(45, 1, 0, 1000);
 	glMatrixMode(GL_MODELVIEW);
 
+	camera = new Camera();
+	camera->eye.x = 0.0f; camera->eye.y = 0.0f; camera->eye.z = 0.0f;
+	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
+	camera->up.x = 0.0f; camera->up.y = 0.0f; camera->up.z = 0.0f;
+
 	glutMainLoop();
 
 }
@@ -29,14 +34,14 @@ void HelloGL::Display()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
-	RotateRectangle();
-	RotateTriangle();
-	RotateSquare();
+
 
 
 #pragma region draw triangles
 
-
+	//RotateRectangle();
+	//RotateTriangle();
+	//RotateSquare();
 
 	//DrawPolygon();
 
@@ -65,17 +70,20 @@ void HelloGL::Display()
 void HelloGL::Update()
 {
 	glLoadIdentity();
+	gluLookAt(
+	camera->eye.x = 0.0f, camera->eye.y = 0.0f, camera->eye.z = 0.0f,
+	camera->center.x = 0.0f, camera->center.y = 0.0f, camera->center.z = 0.0f,
+	camera->up.x = 0.0f, camera->up.y = 0.0f, camera->up.z = 0.0f
+	);
 
 	glutPostRedisplay();
 
 	//rotation += 1.0f;
 
-	if (rotation >= 360.0f)
-	{
-		rotation = 0.0f;
-	}
-		
-	//Sleep(10);
+	//if (rotation >= 360.0f)
+	//{
+	//	rotation = 0.0f;
+	//}
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
