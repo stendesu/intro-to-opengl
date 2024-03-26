@@ -13,6 +13,13 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, 800, 800);
+	gluPerspective(45, 1, 0, 1000);
+	glMatrixMode(GL_MODELVIEW);
+
 	glutMainLoop();
 
 }
@@ -57,6 +64,8 @@ void HelloGL::Display()
 
 void HelloGL::Update()
 {
+	glLoadIdentity();
+
 	glutPostRedisplay();
 
 	//rotation += 1.0f;
