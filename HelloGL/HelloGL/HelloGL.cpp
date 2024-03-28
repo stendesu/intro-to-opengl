@@ -33,8 +33,10 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
-
+	glPushMatrix();
+	glRotatef(rotation, 1.0f, 0.0f, 0.0f);
+	glutWireCube(1);
+	glPopMatrix();
 
 
 #pragma region draw triangles
