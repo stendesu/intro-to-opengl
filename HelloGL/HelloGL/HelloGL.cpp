@@ -4,6 +4,11 @@ HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotation = 0.0f;
 
+	camera = new Camera();
+	camera->eye.x = 0.0f; camera->eye.y = 0.0f; camera->eye.z = 1.0f;
+	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
+	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE);
@@ -20,11 +25,6 @@ HelloGL::HelloGL(int argc, char* argv[])
 	gluPerspective(45, 1, 0, 1000);
 	glMatrixMode(GL_MODELVIEW);
 
-	camera = new Camera();
-	camera->eye.x = 0.0f; camera->eye.y = 0.0f; camera->eye.z = 0.0f;
-	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
-	camera->up.x = 0.0f; camera->up.y = 0.0f; camera->up.z = 0.0f;
-
 	glutMainLoop();
 
 }
@@ -33,10 +33,15 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glPushMatrix();
-	glRotatef(rotation, 1.0f, 0.0f, 0.0f);
-	glutWireCube(1);
-	glPopMatrix();
+	gluLookAt(
+		camera->eye.x, camera->eye.y, camera->eye.z,
+		camera->center.x, camera->center.y, camera->center.z,
+		camera->up.x, camera->up.y, camera->up.z
+	);
+
+
+	DrawWire();
+
 
 
 #pragma region draw triangles
@@ -67,36 +72,68 @@ void HelloGL::Display()
 	glutSwapBuffers();
 }
 
+void HelloGL::DrawWire()
+{
+	glPushMatrix();
+	glRotatef(rotation, 0.0f, -1.0f, 0.0f);
+
+	glutWireTeapot(0.1);
+
+	glEnd();
+
+	glPopMatrix();
+}
 
 
 void HelloGL::Update()
 {
 	glLoadIdentity();
-	gluLookAt(
-	camera->eye.x = 0.0f, camera->eye.y = 0.0f, camera->eye.z = 0.0f,
-	camera->center.x = 0.0f, camera->center.y = 0.0f, camera->center.z = 0.0f,
-	camera->up.x = 0.0f, camera->up.y = 0.0f, camera->up.z = 0.0f
-	);
+
 
 	glutPostRedisplay();
 
-	//rotation += 1.0f;
-
-	//if (rotation >= 360.0f)
-	//{
-	//	rotation = 0.0f;
-	//}
+	if (rotation >= 360.0f)
+	{
+		rotation = 0.0f;
+	}
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
+	if (key == 'q')
+	{
+		rotation += 2.0f;
+		std::cout << "rotating clockwise" << std::endl;
+	}
+	
+	if (key == 'e')
+	{
+		rotation += -2.0f;
+		std::cout << "rotating anti clockwise" << std::endl;
+	}
+
+	if (key == 'w')
+	{
+		camera->eye.y += 0.1f;
+		std::cout << "move camera up" << std::endl;
+	}
+
+	if (key == 'a')
+	{
+		camera->eye.x += 0.1f;
+		std::cout << "move camera left" << std::endl;
+	}
+
+	if (key == 's')
+	{
+		camera->eye.y += -0.1f;
+		std::cout << "move camera down" << std::endl;
+	}
+
 	if (key == 'd')
 	{
-		rotation += 1.0f;
-	}
-	else if (key == 'a')
-	{
-		rotation += -1.0f;
+		camera->eye.x += -0.1f;
+		std::cout << "move camera right" << std::endl;
 	}
 }
 
@@ -284,6 +321,7 @@ void HelloGL::RotateTriangle()
 
 HelloGL::~HelloGL(void)
 {
-	
+	delete camera;
+	camera = nullptr;
 }
 

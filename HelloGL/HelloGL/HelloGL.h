@@ -4,6 +4,7 @@
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
+#include <iostream>
 
 #define REFRESHRATE 16
 
@@ -57,6 +58,8 @@ public:
 	void RotateSquare();
 	
 	void RotateTriangle();
+
+	void DrawWire();
 
 #pragma endregion
 
