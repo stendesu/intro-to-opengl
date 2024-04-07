@@ -18,11 +18,23 @@ struct Camera
 	Vector3 eye, center, up;
 };
 
+struct Color
+{
+	GLfloat r, g, b;
+};
+
+struct Vertex
+{
+	GLfloat x, y, z;
+};
+
 class HelloGL
 {
 private:
 	float rotation;
 	Camera* camera;
+	static Vertex vertices[];
+	static Color colors[];
 public:
 
 	HelloGL(int argc, char* argv[]);
@@ -34,6 +46,10 @@ public:
 	void Update();
 
 	void Keyboard(unsigned char key, int x, int y);
+
+	void DrawCube();
+
+	void DrawCubeArray();
 
 #pragma region draw triangles
 
