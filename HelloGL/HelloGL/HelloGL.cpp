@@ -47,6 +47,34 @@ Color HelloGL::colors[] = { 1, 1, 1, 1, 1, 0, 1, 0, 0, // v0-v1-v2 (front)
 
 0, 1, 0, 0, 1, 1, 0, 0, 1 }; // v6-v5-v4
 
+Vertex HelloGL::indexedVertices[] = { 1, 1, 1, -1, 1, 1, // v0,v1,
+
+-1,-1, 1, 1,-1, 1, // v2,v3
+
+1,-1,-1, 1, 1,-1, // v4,v5
+
+-1, 1,-1, -1,-1,-1 }; // v6,v7
+
+Color HelloGL::indexedColors[] = { 1, 1, 1, 1, 1, 0, // v0,v1,
+
+1, 0, 0, 1, 0, 1, // v2,v3
+
+0, 0, 1, 0, 1, 1, // v4,v5
+
+0, 1, 0, 0, 0, 0 }; //v6,v7
+
+GLushort HelloGL::indices[] = { 0, 1, 2, 2, 3, 0, // front
+
+0, 3, 4, 4, 5, 0, // right
+
+0, 5, 6, 6, 1, 0, // top
+
+1, 6, 7, 7, 2, 1, // left
+
+7, 4, 3, 3, 2, 7, // bottom
+
+4, 7, 6, 6, 5, 4 }; // back
+
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotation = 0.0f;
@@ -143,10 +171,10 @@ void HelloGL::DrawCubeArray()
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < 36; i++)
 	{
-		glColor3f(colors[i / 3].r, colors[i / 3].g, colors[i / 3].b);
-		glVertex3f(vertices[i / 3].x, vertices[i / 3].y, vertices[i / 3].z);
-		glVertex3f(vertices[(i / 3) + 1].x, vertices[(i / 3) + 1].y, vertices[(i / 3) + 1].z);
-		glVertex3f(vertices[(i / 3) + 2].x, vertices[(i / 3) + 2].y, vertices[(i / 3) + 2].z);
+
+		glColor3f(colors[i / 1].r, colors[i / 2].g, colors[i / 3].b);
+		glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+
 	}
 	glEnd();
 
@@ -343,40 +371,37 @@ void HelloGL::Update()
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'q')
+	switch (key)
 	{
+	case 'q':
 		rotation += 2.0f;
 		std::cout << "rotating clockwise" << std::endl;
-	}
-	
-	if (key == 'e')
-	{
+		break;
+	case 'e':
 		rotation += -2.0f;
 		std::cout << "rotating anti clockwise" << std::endl;
-	}
-
-	if (key == 'w')
-	{
-		camera->eye.y += 0.1f;
+		break;
+	case 'w':
+		camera->eye.y += 0.5f;
 		std::cout << "move camera up" << std::endl;
-	}
-
-	if (key == 'a')
-	{
-		camera->eye.x += 0.1f;
+		break;
+	case 'a':
+		camera->eye.x += 0.5f;
 		std::cout << "move camera left" << std::endl;
-	}
-
-	if (key == 's')
-	{
-		camera->eye.y += -0.1f;
+		break;
+	case 's':
+		camera->eye.y += -0.5f;
 		std::cout << "move camera down" << std::endl;
-	}
-
-	if (key == 'd')
-	{
-		camera->eye.x += -0.1f;
+		break;
+	case 'd':
+		camera->eye.x += -0.5f;
 		std::cout << "move camera right" << std::endl;
+		break;
+
+	case GLUT_ACTIVE_SHIFT:
+		// code
+		break;
+
 	}
 }
 

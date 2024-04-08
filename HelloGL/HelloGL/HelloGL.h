@@ -35,6 +35,10 @@ private:
 	Camera* camera;
 	static Vertex vertices[];
 	static Color colors[];
+
+	static Vertex indexedVertices[];
+	static Color indexedColors[];
+	static GLushort indices[];
 public:
 
 	HelloGL(int argc, char* argv[]);
