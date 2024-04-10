@@ -55,6 +55,16 @@ public:
 
 	void DrawCubeArray();
 
+	void DrawIndexedCube();
+
+	void DrawCubeArrayAlt();
+
+	void DrawIndexedCubeAlt();
+
+	void DrawIndexedPyramid();
+
+	void DrawIndexedPyramidAlt();
+
 #pragma region draw triangles
 
 	void DrawPolygon();

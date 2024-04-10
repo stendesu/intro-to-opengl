@@ -47,6 +47,7 @@ Color HelloGL::colors[] = { 1, 1, 1, 1, 1, 0, 1, 0, 0, // v0-v1-v2 (front)
 
 0, 1, 0, 0, 1, 1, 0, 0, 1 }; // v6-v5-v4
 
+
 Vertex HelloGL::indexedVertices[] = { 1, 1, 1, -1, 1, 1, // v0,v1,
 
 -1,-1, 1, 1,-1, 1, // v2,v3
@@ -74,6 +75,41 @@ GLushort HelloGL::indices[] = { 0, 1, 2, 2, 3, 0, // front
 7, 4, 3, 3, 2, 7, // bottom
 
 4, 7, 6, 6, 5, 4 }; // back
+
+
+Vertex pyramidVertices[] = 
+{
+
+	{ 1, 0, 1 }, 
+	{ -1, 0, 1 }, 
+	{ -1, 0, -1 }, 
+	{ 1, 0, -1 },
+
+	{ 0, 1, 0 }
+};
+
+Color pyramidColors[] = 
+{
+
+	{ 1, 0, 0}, 
+	{ 0, 1, 0}, 
+	{ 0, 0, 1}, 
+	{ 1, 1, 0},
+
+	{ 1, 1, 1}
+};
+
+GLushort pyramidIndices[] = 
+{
+	3, 2, 1,
+	3, 1, 0,
+
+	0, 1, 4,
+	1, 2, 4,
+	2, 3, 4,
+	3, 0, 4
+};
+
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
@@ -122,7 +158,17 @@ void HelloGL::Display()
 
 	//DrawCube();
 
-	DrawCubeArray();
+	//DrawCubeArray();
+
+	//DrawIndexedCube();
+
+	//DrawCubeArrayAlt();
+
+	//DrawIndexedCubeAlt();
+
+	//DrawIndexedPyramid();
+
+	//DrawIndexedPyramidAlt();
 
 #pragma region draw triangles
 
@@ -179,6 +225,109 @@ void HelloGL::DrawCubeArray()
 	glEnd();
 
 	glPopMatrix();
+}
+
+void HelloGL::DrawIndexedCube()
+{
+	glPushMatrix();
+
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 36; i += 3)
+	{
+		Vertex v0 = indexedVertices[indices[i]];
+		Vertex v1 = indexedVertices[indices[i + 1]];
+		Vertex v2 = indexedVertices[indices[i + 2]];
+
+		Color c0 = indexedColors[indices[i]];
+		Color c1 = indexedColors[indices[i + 1]];
+		Color c2 = indexedColors[indices[i + 2]];
+
+		glColor3f(c0.r, c0.g, c0.b);
+		glVertex3f(v0.x, v0.y, v0.z);
+
+		glColor3f(c1.r, c1.g, c1.b);
+		glVertex3f(v1.x, v1.y, v1.z);
+
+		glColor3f(c2.r, c2.g, c2.b);
+		glVertex3f(v2.x, v2.y, v2.z);
+	}
+	glEnd();
+
+	glPopMatrix();
+}
+
+void HelloGL::DrawCubeArrayAlt()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glColorPointer(3, GL_FLOAT, 0, colors);
+
+	glPushMatrix();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glPopMatrix();
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void HelloGL::DrawIndexedCubeAlt()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
+	glColorPointer(3, GL_FLOAT, 0, indexedColors);	
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void HelloGL::DrawIndexedPyramid()
+{
+	glPushMatrix();
+
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 18; i += 3)
+	{
+		Vertex v0 = pyramidVertices[pyramidIndices[i]];
+		Vertex v1 = pyramidVertices[pyramidIndices[i + 1]];
+		Vertex v2 = pyramidVertices[pyramidIndices[i + 2]];
+
+		Color c0 = pyramidColors[pyramidIndices[i]];
+		Color c1 = pyramidColors[pyramidIndices[i + 1]];
+		Color c2 = pyramidColors[pyramidIndices[i + 2]];
+
+		glColor3f(c0.r, c0.g, c0.b);
+		glVertex3f(v0.x, v0.y, v0.z);
+
+		glColor3f(c1.r, c1.g, c1.b);
+		glVertex3f(v1.x, v1.y, v1.z);
+
+		glColor3f(c2.r, c2.g, c2.b);
+		glVertex3f(v2.x, v2.y, v2.z);
+	}
+	glEnd();
+
+	glPopMatrix();
+}
+
+void HelloGL::DrawIndexedPyramidAlt()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), pyramidVertices);
+	glColorPointer(3, GL_FLOAT, sizeof(Color), pyramidColors);
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, pyramidIndices);
+	glPopMatrix();
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void HelloGL::DrawCube()
