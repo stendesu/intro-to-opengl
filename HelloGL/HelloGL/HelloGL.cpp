@@ -10,7 +10,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 	rotation = 0.0f;
 
 	camera = new Camera();
-	camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;
+	camera->eye.x = 5.0f; camera->eye.y = 0.0f; camera->eye.z = 0.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
@@ -58,11 +58,11 @@ void HelloGL::Display()
 
 	//DrawCubeArrayAlt();
 
-	DrawIndexedCubeAlt();
+	//DrawIndexedCubeAlt();
 
 	//DrawIndexedPyramid();
 
-	DrawIndexedPyramidAlt();
+	//DrawIndexedPyramidAlt();
 
 #pragma region draw triangles
 
@@ -97,7 +97,7 @@ void HelloGL::DrawWire()
 	glPushMatrix();
 	glRotatef(rotation, 0.0f, -1.0f, 0.0f);
 
-	glutWireTeapot(0.1);
+	glutWireTeapot(1);
 
 	glEnd();
 
@@ -439,6 +439,14 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	case 'd':
 		camera->eye.x += -0.5f;
 		std::cout << "move camera right" << std::endl;
+		break;
+
+	case '1':
+		camera->eye.z += -0.5f;
+		break;
+
+	case '2':
+		camera->eye.z += 0.5f;
 		break;
 
 	case GLUT_ACTIVE_SHIFT:
