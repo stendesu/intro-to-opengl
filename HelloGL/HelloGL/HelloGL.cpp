@@ -36,13 +36,13 @@ HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotation = 0.0f;
 	camera = new Camera();
-	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = -5.0f;
+	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = 5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
 	for (int i = 0; i < 200; i++) 
 	{
-		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, 0);
+		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
     GLUTCallbacks::Init(this);
@@ -120,14 +120,17 @@ void HelloGL::Update()
 	for (int i = 0; i < 200; i++)
 	{
 		cube[i]->Update();
-	}
 
+		// Move the cube towards the camera
+		cube[i]->SetPosition(cube[i]->GetPosition().x, cube[i]->GetPosition().y, cube[i]->GetPosition().z + 0.1f);
+
+		// Reset the cube to the rear of the frustum if it moves behind the camera
+		if (cube[i]->GetPosition().z > camera->eye.z)
+		{
+			cube[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		}
+	}
 	glutPostRedisplay();
-
-	if (rotation >= 360.0f)
-	{
-		rotation = 0.0f;
-	}
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)

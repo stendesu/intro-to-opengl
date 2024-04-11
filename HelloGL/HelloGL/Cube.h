@@ -20,5 +20,8 @@ public:
 
 	void Draw();
 	void Update();
+
+	Vector3 GetPosition();
+	void SetPosition(float new_x, float new_y, float new_z);
 };
 

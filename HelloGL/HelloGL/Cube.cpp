@@ -64,3 +64,14 @@ void Cube::Update()
 		_rotation = 0.0f;
 	}
 }
+
+Vector3 Cube::GetPosition()
+{
+	return _position;
+}
+void Cube::SetPosition(float new_x, float new_y, float new_z)
+{
+	_position.x = new_x;
+	_position.y = new_y;
+	_position.z = new_z;
+}

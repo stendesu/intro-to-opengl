@@ -32,5 +32,7 @@ public:
 	void DrawWire();
 
 	void Reshape(int width, int height);
+
+	void FlyTowardsCamera(float speed, const Vector3& cameraPosition);
 };
 
