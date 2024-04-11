@@ -1,18 +1,46 @@
 #include "HelloGL.h"
 #include "Structures.h"
 
+Vertex pyramidVertices[] =
+{
 
+	{ 1, 0, 1 },
+	{ -1, 0, 1 },
+	{ -1, 0, -1 },
+	{ 1, 0, -1 },
 
+	{ 0, 1, 0 }
+};
+Color pyramidColors[] =
+{
 
+	{ 1, 0, 0},
+	{ 0, 1, 0},
+	{ 0, 0, 1},
+	{ 1, 1, 0},
+
+	{ 1, 1, 1}
+};
+GLushort pyramidIndices[] =
+{
+	3, 2, 1,
+	3, 1, 0,
+
+	0, 1, 4,
+	1, 2, 4,
+	2, 3, 4,
+	3, 0, 4
+};
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotation = 0.0f;
-
 	camera = new Camera();
-	camera->eye.x = 5.0f; camera->eye.y = 0.0f; camera->eye.z = 0.0f;
+	camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
+
+	cube = new Cube();
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
@@ -41,52 +69,13 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	cube->Draw();
+
 	gluLookAt(
 		camera->eye.x, camera->eye.y, camera->eye.z,
 		camera->center.x, camera->center.y, camera->center.z,
 		camera->up.x, camera->up.y, camera->up.z
 	);
-
-
-	//DrawWire();
-
-	//DrawCube();
-
-	//DrawCubeArray();
-
-	//DrawIndexedCube();
-
-	//DrawCubeArrayAlt();
-
-	//DrawIndexedCubeAlt();
-
-	//DrawIndexedPyramid();
-
-	//DrawIndexedPyramidAlt();
-
-#pragma region draw triangles
-
-	//RotateRectangle();
-	//RotateTriangle();
-	//RotateSquare();
-
-	//DrawPolygon();
-
-	//DrawTriangle();
-
-	//DrawScalene();
-
-	//DrawIsosceles();
-
-	//DrawEquilateral();
-
-	//DrawAcute();
-
-	//DrawRight();
-
-	//DrawObtuse();
-
-#pragma endregion
 
 	glFlush();
 	glutSwapBuffers();
@@ -104,305 +93,11 @@ void HelloGL::DrawWire()
 	glPopMatrix();
 }
 
-void HelloGL::DrawCubeArray()
-{
-	glPushMatrix();
-
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i < 36; i++)
-	{
-
-		glColor3f(colors[i / 1].r, colors[i / 2].g, colors[i / 3].b);
-		glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
-
-	}
-	glEnd();
-
-	glPopMatrix();
-}
-
-void HelloGL::DrawIndexedCube()
-{
-	glPushMatrix();
-
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i < 36; i += 3)
-	{
-		Vertex v0 = indexedVertices[indices[i]];
-		Vertex v1 = indexedVertices[indices[i + 1]];
-		Vertex v2 = indexedVertices[indices[i + 2]];
-
-		Color c0 = indexedColors[indices[i]];
-		Color c1 = indexedColors[indices[i + 1]];
-		Color c2 = indexedColors[indices[i + 2]];
-
-		glColor3f(c0.r, c0.g, c0.b);
-		glVertex3f(v0.x, v0.y, v0.z);
-
-		glColor3f(c1.r, c1.g, c1.b);
-		glVertex3f(v1.x, v1.y, v1.z);
-
-		glColor3f(c2.r, c2.g, c2.b);
-		glVertex3f(v2.x, v2.y, v2.z);
-	}
-	glEnd();
-
-	glPopMatrix();
-}
-
-void HelloGL::DrawCubeArrayAlt()
-{
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glColorPointer(3, GL_FLOAT, 0, colors);
-
-	glPushMatrix();
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glPopMatrix();
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-void HelloGL::DrawIndexedCubeAlt()
-{
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
-	glColorPointer(3, GL_FLOAT, 0, indexedColors);	
-
-	glPushMatrix();
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
-	glPopMatrix();
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-void HelloGL::DrawIndexedPyramid()
-{
-	glPushMatrix();
-
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i < 18; i += 3)
-	{
-		Vertex v0 = pyramidVertices[pyramidIndices[i]];
-		Vertex v1 = pyramidVertices[pyramidIndices[i + 1]];
-		Vertex v2 = pyramidVertices[pyramidIndices[i + 2]];
-
-		Color c0 = pyramidColors[pyramidIndices[i]];
-		Color c1 = pyramidColors[pyramidIndices[i + 1]];
-		Color c2 = pyramidColors[pyramidIndices[i + 2]];
-
-		glColor3f(c0.r, c0.g, c0.b);
-		glVertex3f(v0.x, v0.y, v0.z);
-
-		glColor3f(c1.r, c1.g, c1.b);
-		glVertex3f(v1.x, v1.y, v1.z);
-
-		glColor3f(c2.r, c2.g, c2.b);
-		glVertex3f(v2.x, v2.y, v2.z);
-	}
-	glEnd();
-
-	glPopMatrix();
-}
-
-void HelloGL::DrawIndexedPyramidAlt()
-{
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), pyramidVertices);
-	glColorPointer(3, GL_FLOAT, sizeof(Color), pyramidColors);
-
-	glPushMatrix();
-	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, pyramidIndices);
-	glPopMatrix();
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-void HelloGL::DrawCube()
-{
-	glBegin(GL_TRIANGLES);
-
-	// face v0-v1-v2
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	glColor3f(1, 1, 0);
-
-	glVertex3f(-1, 1, 1);
-
-	glColor3f(1, 0, 0);
-
-	glVertex3f(-1, -1, 1);
-
-	// face v2-v3-v0
-
-	glColor3f(1, 0, 0);
-
-	glVertex3f(-1, -1, 1);
-
-	glColor3f(1, 0, 1);
-
-	glVertex3f(1, -1, 1);
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	// face v0-v3-v4
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	glColor3f(1, 0, 1);
-
-	glVertex3f(1, -1, 1);
-
-	glColor3f(0, 0, 1);
-
-	glVertex3f(1, -1, -1);
-
-	// face v4-v5-v0
-
-	glColor3f(0, 0, 1);
-
-	glVertex3f(1, -1, -1);
-
-	glColor3f(0, 1, 1);
-
-	glVertex3f(1, 1, -1);
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	// face v0-v5-v6
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	glColor3f(0, 1, 1);
-
-	glVertex3f(1, 1, -1);
-
-	glColor3f(0, 1, 0);
-
-	glVertex3f(-1, 1, -1);
-
-	// face v6-v1-v0
-
-	glColor3f(0, 1, 0);
-
-	glVertex3f(-1, 1, -1);
-
-	glColor3f(1, 1, 0);
-
-	glVertex3f(-1, 1, 1);
-
-	glColor3f(1, 1, 1);
-
-	glVertex3f(1, 1, 1);
-
-	// face v1-v6-v7
-
-	glColor3f(1, 1, 0);
-
-	glVertex3f(-1, 1, 1);
-
-	glColor3f(0, 1, 0);
-
-	glVertex3f(-1, 1, -1);
-
-	glColor3f(0, 0, 0);
-
-	glVertex3f(-1, -1, -1);
-
-	// face v7-v2-v1
-
-	glColor3f(0, 0, 0);
-
-	glVertex3f(-1, -1, -1);
-
-	glColor3f(1, 0, 0);
-
-	glVertex3f(-1, -1, 1);
-
-	glColor3f(1, 1, 0);
-
-	glVertex3f(-1, 1, 1);
-
-	// face v7-v4-v3
-
-	glColor3f(0, 0, 0);
-
-	glVertex3f(-1, -1, -1);
-
-	glColor3f(0, 0, 1);
-
-	glVertex3f(1, -1, -1);
-
-	glColor3f(1, 0, 1);
-
-	glVertex3f(1, -1, 1);
-
-	// face v3-v2-v7
-
-	glColor3f(1, 0, 1);
-
-	glVertex3f(1, -1, 1);
-
-	glColor3f(1, 0, 0);
-
-	glVertex3f(-1, -1, 1);
-
-	glColor3f(0, 0, 0);
-
-	glVertex3f(-1, -1, -1);
-
-	// face v4-v7-v6
-
-	glColor3f(0, 0, 1);
-
-	glVertex3f(1, -1, -1);
-
-	glColor3f(0, 0, 0);
-
-	glVertex3f(-1, -1, -1);
-
-	glColor3f(0, 1, 0);
-
-	glVertex3f(-1, 1, -1);
-
-	// face v6-v5-v4
-
-	glColor3f(0, 1, 0);
-
-	glVertex3f(-1, 1, -1);
-
-	glColor3f(0, 1, 1);
-
-	glVertex3f(1, 1, -1);
-
-	glColor3f(0, 0, 1);
-
-	glVertex3f(1, -1, -1);
-
-	glEnd();
-}
-
 void HelloGL::Update()
 {
 	glLoadIdentity();
 
+	cube->Update();
 
 	glutPostRedisplay();
 
@@ -455,188 +150,6 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 
 	}
 }
-
-
-#pragma region Draw triangle functions
-
-void HelloGL::DrawPolygon()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.0f, 1.0f, 0.0f);
-
-		glVertex2f(-0.75, 0.5);
-		glVertex2f(0.75, 0.5);
-		glVertex2f(0.75, -0.5);
-		glVertex2f(-0.75, -0.5);
-		glEnd();
-	}
-}
-
-void HelloGL::DrawTriangle()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.0f, 0.5f, 0.0f);
-
-		glVertex2f(0, 0.6);	//	TOP left
-		glVertex2f(0, 0.6);	//	TOP right
-		glVertex2f(0.5, -0.6);	//	BOTTOM right
-		glVertex2f(-0.5, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawScalene()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
-
-		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(0.5, -0.6);	//	BOTTOM right
-		glVertex2f(-0.7, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawIsosceles()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.5f, 1.0f, 0.5f, 0.0f);
-
-		glVertex2f(0, 0.7);	//	TOP left
-		glVertex2f(0.5, -0.6);	//	BOTTOM right
-		glVertex2f(-0.5, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawEquilateral()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
-
-		glVertex2f(0.0, 0.3);	//	TOP left
-		glVertex2f(0.5, -0.5);	//	BOTTOM right
-		glVertex2f(-0.5, -0.5);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawAcute()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
-
-		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(0.5, -0.6);	//	BOTTOM right
-		glVertex2f(-0.7, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawRight()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(1.0f, 0.5f, 0.5f, 0.0f);
-
-		glVertex2f(-0.5, 0.3);	//	TOP left
-		glVertex2f(0.5, -0.6);	//	BOTTOM right
-		glVertex2f(-0.5, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-
-void HelloGL::DrawObtuse()
-{
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-
-		glVertex2f(-0.7, 0.3);	//	TOP left
-		glVertex2f(0.6, -0.6);	//	BOTTOM right
-		glVertex2f(-0.4, -0.6);	// BOTTOM left
-		glEnd();
-	}
-}
-#pragma endregion
-
-#pragma region rotate polygons
-
-void HelloGL::RotateRectangle()
-{
-	glPushMatrix();
-	glRotatef(rotation, 5.0f, 6.0f, 0.0f);
-
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-
-		glVertex2f(-0.4, 0.3);	//	TOP left
-		glVertex2f(0.4, 0.3);	//	TOP RIGHT
-		glVertex2f(0.4, -0.3);	//	BOTTOM right
-		glVertex2f(-0.4, -0.3);	// BOTTOM left
-
-		//glTranslatef(0, 1, 0);
-		glEnd();
-	}
-
-
-
-	glPopMatrix();
-
-
-}
-
-void HelloGL::RotateSquare()
-{
-	glPushMatrix();
-	glRotatef(rotation, 0.0f, 0.0f, -5.0f);
-
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-
-		glVertex2f(-0.9, 0.3);	//	TOP left
-		glVertex2f(-0.6, 0.3);	//	TOP RIGHT
-		glVertex2f(-0.6, -0.3);	//	BOTTOM right
-		glVertex2f(-0.9, -0.3);	// BOTTOM left
-		glEnd();
-	}
-	glPopMatrix();
-
-
-}
-
-void HelloGL::RotateTriangle()
-{
-	glPushMatrix();
-	glRotatef(rotation, 0.0f, 0.0f, 5.0f);
-
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.0f, 1.0f, 1.0f, 0.0f);
-
-		glVertex2f(0.6, 0.4);	//	TOP left
-		glVertex2f(0.8, -0.3);	//	BOTTOM right
-		glVertex2f(0.4, -0.3);	// BOTTOM left
-		glEnd();
-	}
-
-	glPopMatrix();
-
-
-}
-
-#pragma endregion
-
-
-
 
 HelloGL::~HelloGL(void)
 {
