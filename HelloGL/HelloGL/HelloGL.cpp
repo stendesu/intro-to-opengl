@@ -79,12 +79,10 @@ void HelloGL::Display()
 		camera->up.x, camera->up.y, camera->up.z
 	);
 
-
 	for (int i = 0; i < 200; i++)
 	{
 		cube[i]->Draw();
 	}
-
 
 	glFlush();
 	glutSwapBuffers();
@@ -121,10 +119,7 @@ void HelloGL::Update()
 	{
 		cube[i]->Update();
 
-		// Move the cube towards the camera
 		cube[i]->SetPosition(cube[i]->GetPosition().x, cube[i]->GetPosition().y, cube[i]->GetPosition().z + 0.1f);
-
-		// Reset the cube to the rear of the frustum if it moves behind the camera
 		if (cube[i]->GetPosition().z > camera->eye.z)
 		{
 			cube[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
