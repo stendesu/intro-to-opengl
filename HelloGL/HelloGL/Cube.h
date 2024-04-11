@@ -13,8 +13,9 @@ private:
 	static GLushort indices[];
 
 	GLfloat _rotation;
+	Vector3 _position;
 public:
-	Cube();
+	Cube(float x, float y, float z, float rot);
 	~Cube();
 
 	void Draw();

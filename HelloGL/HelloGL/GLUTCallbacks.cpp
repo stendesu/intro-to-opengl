@@ -37,4 +37,8 @@ namespace GLUTCallbacks
 		helloGL->Keyboard(key, x, y);
 	}
 
+	void Reshape(int width, int height)
+	{
+		helloGL->Reshape(width, height);
+	}
 }

@@ -36,29 +36,34 @@ HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotation = 0.0f;
 	camera = new Camera();
-	camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;
+	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = -5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
-	cube = new Cube();
+	for (int i = 0; i < 200; i++) 
+	{
+		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, 0);
+	}
 
-	GLUTCallbacks::Init(this);
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE);
-	glutInitWindowSize(800, 800);
-	glutInitWindowPosition(-1, 1);
-	glutCreateWindow("Simple OpenGL Program");
-	glutDisplayFunc(GLUTCallbacks::Display);
-	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
-	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+    GLUTCallbacks::Init(this);
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitWindowSize(1280, 720);
+    glutInitWindowPosition(-1, 1);
+    glutCreateWindow("Simple OpenGL Program");
+    glutDisplayFunc(GLUTCallbacks::Display);
+	glutReshapeFunc(GLUTCallbacks::Reshape);
+    glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+    glutKeyboardFunc(GLUTCallbacks::Keyboard);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, 800, 800);
-	gluPerspective(45, 1, 0, 1000);
+	gluPerspective(45, 1, 1, 1000);;
 	glMatrixMode(GL_MODELVIEW);
 
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST); 
 	glCullFace(GL_BACK);
 
 	glutMainLoop();
@@ -67,18 +72,33 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 void HelloGL::Display()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	cube->Draw();
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	gluLookAt(
 		camera->eye.x, camera->eye.y, camera->eye.z,
 		camera->center.x, camera->center.y, camera->center.z,
 		camera->up.x, camera->up.y, camera->up.z
 	);
 
+
+	for (int i = 0; i < 200; i++)
+	{
+		cube[i]->Draw();
+	}
+
+
 	glFlush();
 	glutSwapBuffers();
+}
+
+void HelloGL::Reshape(int width, int height)
+{
+	if (height == 0) height = 1; // Prevent division by zero
+
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f); // Adjust aspect ratio
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void HelloGL::DrawWire()
@@ -97,7 +117,10 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 
-	cube->Update();
+	for (int i = 0; i < 200; i++)
+	{
+		cube[i]->Update();
+	}
 
 	glutPostRedisplay();
 

@@ -16,7 +16,7 @@ class HelloGL
 private:
 	float rotation;
 	Camera* camera;
-	Cube* cube;
+	Cube* cube[200];
 public:
 
 	HelloGL(int argc, char* argv[]);
@@ -30,5 +30,7 @@ public:
 	void Keyboard(unsigned char key, int x, int y);
 
 	void DrawWire();
+
+	void Reshape(int width, int height);
 };
 
