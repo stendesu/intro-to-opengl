@@ -66,7 +66,6 @@ bool Cube::Load(char* path)
 	indexedVertices = new Vertex[numVertices];
 	for (int i = 0; i < numVertices; i++)
 	{
-		//	TODO Use inFile to populate the indexedVertices array
 		inFile >> indexedVertices[i].x >> indexedVertices[i].y >> indexedVertices[i].z;
 	}
 
@@ -74,7 +73,6 @@ bool Cube::Load(char* path)
 	indexedColors = new Color[numColors];
 	for (int i = 0; i < numColors; i++)
 	{
-		//	TODO: Load Color information
 		inFile >> indexedColors[i].r >> indexedColors[i].g >> indexedColors[i].b;
 	}
 
@@ -82,7 +80,6 @@ bool Cube::Load(char* path)
 	indices = new GLushort[numIndices];
 	for (int i = 0; i < numIndices; i++)
 	{
-		//	TODO: Load Indices information
 		inFile >> indices[i];
 	}
 

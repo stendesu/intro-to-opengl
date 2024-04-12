@@ -45,6 +45,8 @@ HelloGL::HelloGL(int argc, char* argv[])
 		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
+	Cube::Load((char*)"data/cube.txt");
+
     GLUTCallbacks::Init(this);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
