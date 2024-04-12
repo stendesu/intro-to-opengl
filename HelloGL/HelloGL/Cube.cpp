@@ -27,9 +27,11 @@ void Cube::Draw()
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
-		glColorPointer(3, GL_FLOAT, 0, indexedColors); Vertex* Cube::indexedVertices = nullptr;
-		Color* Cube::indexedColors = nullptr;
-		GLushort* Cube::indices = nullptr;
+		glColorPointer(3, GL_FLOAT, 0, indexedColors); 
+
+		//Vertex* Cube::indexedVertices = nullptr;
+		//Color* Cube::indexedColors = nullptr;
+		//GLushort* Cube::indices = nullptr;
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
