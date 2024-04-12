@@ -1,33 +1,33 @@
-#include "Cube.h"
+#include "Teapot.h"
 
-Vertex* Cube::indexedVertices = nullptr;
-Color* Cube::indexedColors = nullptr;
-GLushort* Cube::indices = nullptr;
+Vertex* Teapot::indexedVertices = nullptr;
+Color* Teapot::indexedColors = nullptr;
+GLushort* Teapot::indices = nullptr;
 
-int Cube::numVertices = 0;
-int Cube::numColors = 0;
-int Cube::numIndices = 0;
+int Teapot::numVertices = 0;
+int Teapot::numColors = 0;
+int Teapot::numIndices = 0;
 
-Cube::Cube(float x, float y, float z, float rot)
+Teapot::Teapot(float x, float y, float z, float rot)
 {
 	_rotation = rot;
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
 }
-Cube::~Cube()
+Teapot::~Teapot()
 {
 
 }
 
-void Cube::Draw()
+void Teapot::Draw()
 {
-	if (indexedVertices != nullptr && indexedColors != nullptr && indices != nullptr) 
+	if (indexedVertices != nullptr && indexedColors != nullptr && indices != nullptr)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
-		glColorPointer(3, GL_FLOAT, 0, indexedColors); 
+		glColorPointer(3, GL_FLOAT, 0, indexedColors);
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
@@ -39,7 +39,7 @@ void Cube::Draw()
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 }
-void Cube::Update()
+void Teapot::Update()
 {
 	_rotation += 1.0f;
 	if (_rotation >= 360.0f)
@@ -48,7 +48,18 @@ void Cube::Update()
 	}
 }
 
-bool Cube::Load(char* path)
+Vector3 Teapot::GetPosition()
+{
+	return _position;
+}
+void Teapot::SetPosition(float new_x, float new_y, float new_z)
+{
+	_position.x = new_x;
+	_position.y = new_y;
+	_position.z = new_z;
+}
+
+bool Teapot::Load(char* path)
 {
 	std::ifstream inFile;
 	inFile.open(path);
@@ -82,15 +93,4 @@ bool Cube::Load(char* path)
 	inFile.close();
 
 	return true;
-}
-
-Vector3 Cube::GetPosition()
-{
-	return _position;
-}
-void Cube::SetPosition(float new_x, float new_y, float new_z)
-{
-	_position.x = new_x;
-	_position.y = new_y;
-	_position.z = new_z;
 }

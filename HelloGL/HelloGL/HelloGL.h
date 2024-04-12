@@ -5,7 +5,9 @@
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
 #include <iostream>
+
 #include "Cube.h"
+#include "Teapot.h"
 
 #include "Structures.h"
 
@@ -17,6 +19,7 @@ private:
 	float rotation;
 	Camera* camera;
 	Cube* cube[200];
+	Teapot* teapot[200];
 public:
 
 	HelloGL(int argc, char* argv[]);

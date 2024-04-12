@@ -47,6 +47,13 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	Cube::Load((char*)"data/cube.txt");
 
+	for (int i = 0; i < 200; i++)
+	{
+		teapot[i] = new Teapot(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+	}
+
+	Teapot::Load((char*)"data/teapot.obj");
+
     GLUTCallbacks::Init(this);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
@@ -84,6 +91,11 @@ void HelloGL::Display()
 	for (int i = 0; i < 200; i++)
 	{
 		cube[i]->Draw();
+	}
+
+	for (int i = 0; i < 200; i++)
+	{
+		teapot[i]->Draw();
 	}
 
 	glFlush();
@@ -125,6 +137,17 @@ void HelloGL::Update()
 		if (cube[i]->GetPosition().z > camera->eye.z)
 		{
 			cube[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		}
+	}
+
+	for (int i = 0; i < 200; i++)
+	{
+		teapot[i]->Update();
+
+		teapot[i]->SetPosition(teapot[i]->GetPosition().x, teapot[i]->GetPosition().y, teapot[i]->GetPosition().z + 0.1f);
+		if (teapot[i]->GetPosition().z > camera->eye.z)
+		{
+			teapot[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		}
 	}
 	glutPostRedisplay();
