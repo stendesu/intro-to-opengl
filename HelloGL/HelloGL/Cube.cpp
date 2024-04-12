@@ -52,6 +52,45 @@ void Cube::Update()
 	}
 }
 
+bool Cube::Load(char* path)
+{
+	std::ifstream inFile;
+	inFile.open(path);
+	if (!inFile.good())
+	{
+		std::cerr << "Can't open text file " << path << std::endl;
+		return false;
+	}
+
+	inFile >> numVertices;
+	indexedVertices = new Vertex[numVertices];
+	for (int i = 0; i < numVertices; i++)
+	{
+		//	TODO Use inFile to populate the indexedVertices array
+		inFile >> indexedVertices[i].x >> indexedVertices[i].y >> indexedVertices[i].z;
+	}
+
+	inFile >> numColors;
+	indexedColors = new Color[numColors];
+	for (int i = 0; i < numColors; i++)
+	{
+		//	TODO: Load Color information
+		inFile >> indexedColors[i].r >> indexedColors[i].g >> indexedColors[i].b;
+	}
+
+	inFile >> numIndices;
+	indices = new GLushort[numIndices];
+	for (int i = 0; i < numIndices; i++)
+	{
+		//	TODO: Load Indices information
+		inFile >> indices[i];
+	}
+
+	inFile.close();
+
+	return true;
+}
+
 Vector3 Cube::GetPosition()
 {
 	return _position;
