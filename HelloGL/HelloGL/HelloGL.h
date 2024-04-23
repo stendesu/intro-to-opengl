@@ -18,9 +18,12 @@ class HelloGL
 private:
 	float rotation;
 	Camera* camera;
-	Cube* cube[200];
+	SceneObject* objects[1000];
 	Teapot* teapot[200];
 public:
+
+	void InitObjects();
+	void InitGL(int argc, char* argv[]);
 
 	HelloGL(int argc, char* argv[]);
 

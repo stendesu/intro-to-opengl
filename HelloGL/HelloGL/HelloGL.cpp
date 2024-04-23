@@ -1,5 +1,6 @@
 #include "HelloGL.h"
 #include "Structures.h"
+#include "MeshLoader.h"
 
 Vertex pyramidVertices[] =
 {
@@ -32,7 +33,7 @@ GLushort pyramidIndices[] =
 	3, 0, 4
 };
 
-HelloGL::HelloGL(int argc, char* argv[])
+void HelloGL::InitObjects()
 {
 	rotation = 0.0f;
 	camera = new Camera();
@@ -40,12 +41,12 @@ HelloGL::HelloGL(int argc, char* argv[])
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
-	for (int i = 0; i < 200; i++) 
-	{
-		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	}
+	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
-	Cube::Load((char*)"data/cube.txt");
+	for (int i = 0; i < 200; i++)
+	{
+		objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+	}
 
 	for (int i = 0; i < 200; i++)
 	{
@@ -53,17 +54,19 @@ HelloGL::HelloGL(int argc, char* argv[])
 	}
 
 	Teapot::Load((char*)"data/teapot.obj");
-
-    GLUTCallbacks::Init(this);
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(1280, 720);
-    glutInitWindowPosition(-1, 1);
-    glutCreateWindow("Simple OpenGL Program");
-    glutDisplayFunc(GLUTCallbacks::Display);
+}
+void HelloGL::InitGL(int argc, char* argv[])
+{
+	GLUTCallbacks::Init(this);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitWindowSize(1280, 720);
+	glutInitWindowPosition(-1, 1);
+	glutCreateWindow("Simple OpenGL Program");
+	glutDisplayFunc(GLUTCallbacks::Display);
 	glutReshapeFunc(GLUTCallbacks::Reshape);
-    glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
-    glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -72,11 +75,19 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glMatrixMode(GL_MODELVIEW);
 
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST); 
+	glEnable(GL_DEPTH_TEST);
 	glCullFace(GL_BACK);
 
-	glutMainLoop();
 
+}
+
+HelloGL::HelloGL(int argc, char* argv[])
+{
+	InitGL(argc, argv);
+
+	InitObjects();
+
+	glutMainLoop();
 }
 
 void HelloGL::Display()
@@ -90,7 +101,7 @@ void HelloGL::Display()
 
 	for (int i = 0; i < 200; i++)
 	{
-		cube[i]->Draw();
+		objects[i]->Draw();
 	}
 
 	for (int i = 0; i < 200; i++)
@@ -131,12 +142,12 @@ void HelloGL::Update()
 
 	for (int i = 0; i < 200; i++)
 	{
-		cube[i]->Update();
+		objects[i]->Update();
 
-		cube[i]->SetPosition(cube[i]->GetPosition().x, cube[i]->GetPosition().y, cube[i]->GetPosition().z + 0.1f);
-		if (cube[i]->GetPosition().z > camera->eye.z)
+		objects[i]->SetPosition(objects[i]->GetPosition().x, objects[i]->GetPosition().y, objects[i]->GetPosition().z + 0.1f);
+		if (objects[i]->GetPosition().z > camera->eye.z)
 		{
-			cube[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+			objects[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		}
 	}
 

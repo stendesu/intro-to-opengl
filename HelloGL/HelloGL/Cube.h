@@ -9,19 +9,21 @@
 #include <fstream>
 #include <cerrno>
 
-class Cube
+#include "SceneObject.h"
+
+class Cube : public SceneObject
 {
 private:
-	static Vertex* indexedVertices;
-	static Color* indexedColors;
-	static GLushort* indices;
+	//static Vertex* indexedVertices;
+	//static Color* indexedColors;
+	//static GLushort* indices;
 
 	GLfloat _rotation;
 	Vector3 _position;
 
 	static int numVertices, numColors, numIndices;
 public:
-	Cube(float x, float y, float z, float rot);
+	Cube(Mesh* mesh, float x, float y, float z, float rot);
 	~Cube();
 
 	void Draw();
