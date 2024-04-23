@@ -48,12 +48,12 @@ void HelloGL::InitObjects()
 		objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
-	for (int i = 0; i < 200; i++)
-	{
-		teapot[i] = new Teapot(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	teapot[i] = new Teapot(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+	//}
 
-	Teapot::Load((char*)"data/teapot.obj");
+	//Teapot::Load((char*)"data/teapot.obj");
 }
 void HelloGL::InitGL(int argc, char* argv[])
 {
@@ -104,10 +104,10 @@ void HelloGL::Display()
 		objects[i]->Draw();
 	}
 
-	for (int i = 0; i < 200; i++)
-	{
-		teapot[i]->Draw();
-	}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	teapot[i]->Draw();
+	//}
 
 	glFlush();
 	glutSwapBuffers();
@@ -151,16 +151,16 @@ void HelloGL::Update()
 		}
 	}
 
-	for (int i = 0; i < 200; i++)
-	{
-		teapot[i]->Update();
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	teapot[i]->Update();
 
-		teapot[i]->SetPosition(teapot[i]->GetPosition().x, teapot[i]->GetPosition().y, teapot[i]->GetPosition().z + 0.1f);
-		if (teapot[i]->GetPosition().z > camera->eye.z)
-		{
-			teapot[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-		}
-	}
+	//	teapot[i]->SetPosition(teapot[i]->GetPosition().x, teapot[i]->GetPosition().y, teapot[i]->GetPosition().z + 0.1f);
+	//	if (teapot[i]->GetPosition().z > camera->eye.z)
+	//	{
+	//		teapot[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	//	}
+	//}
 	glutPostRedisplay();
 }
 

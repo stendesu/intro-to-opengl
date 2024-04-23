@@ -5,6 +5,10 @@
 
 using namespace std;
 
+Vertex* indexedVertices = nullptr;
+Color* indexedColors = nullptr;
+GLushort* indices = nullptr;
+
 int numVertices = 0;
 int numColors = 0;
 int numIndices = 0;

@@ -3,6 +3,22 @@
 SceneObject::SceneObject(Mesh* mesh)
 {
 	_mesh = mesh;
+	
+	_position.x, _position.y, _position.z = 0;
+	_rotation = 0;
+}
+SceneObject::~SceneObject()
+{
+
+}
+
+void SceneObject::Update()
+{
+
+}
+void SceneObject::Draw()
+{
+
 }
 
 Vector3 SceneObject::GetPosition()
