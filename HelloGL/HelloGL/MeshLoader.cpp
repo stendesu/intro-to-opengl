@@ -31,22 +31,31 @@ namespace MeshLoader
 	void LoadColours(ifstream& inFile, Mesh& mesh)
 	{
 		inFile >> mesh.ColorCount;
-		mesh.Colors = new Color[mesh.ColorCount];
-		for (int i = 0; i < mesh.ColorCount; i++)
+
+		if (mesh.ColorCount > 0)
 		{
-			inFile >> mesh.Colors[i].r >> mesh.Colors[i].g >> mesh.Colors[i].b;
+			mesh.Colors = new Color[mesh.ColorCount];
+
+			for (int i = 0; i < mesh.ColorCount; i++)
+			{
+				inFile >> mesh.Colors[i].r >> mesh.Colors[i].g >> mesh.Colors[i].b;
+			}
 		}
 	}
 
 	void LoadIndices(ifstream& inFile, Mesh& mesh)
 	{
 		inFile >> mesh.IndexCount;
-		mesh.Indices = new GLushort[mesh.IndexCount];
-		for (int i = 0; i < mesh.IndexCount; i++)
-		{
-			inFile >> mesh.Indices[i];
-		}
 
+		if (mesh.ColorCount > 0)
+		{
+			mesh.Indices = new GLushort[mesh.IndexCount];
+
+			for (int i = 0; i < mesh.IndexCount; i++)
+			{
+				inFile >> mesh.Indices[i];
+			}
+		}
 	}
 
 	Mesh* MeshLoader::Load(char* path)
@@ -63,6 +72,7 @@ namespace MeshLoader
 		inFile.close();
 
 		//LOAD DATA USING METHODS ABOVE
+
 
 		return mesh;
 	}

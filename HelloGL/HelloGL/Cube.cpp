@@ -34,10 +34,15 @@ void Cube::Draw()
 		glTranslatef(_position.x, _position.y, _position.z);
 		glRotatef(_rotation, 1.0f, 1.0f, 1.0f);
 		glDrawElements(GL_TRIANGLES, 1, GL_UNSIGNED_SHORT, _mesh->Indices);
+		std::cout << "not null" << std::endl;
 		glPopMatrix();
 
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+	else
+	{
+		std::cout << "null" << std::endl;
 	}
 }
 void Cube::Update()
