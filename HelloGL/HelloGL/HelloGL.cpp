@@ -43,7 +43,7 @@ void HelloGL::InitObjects()
 
 	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 999; i++)
 	{
 		objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
@@ -83,9 +83,10 @@ void HelloGL::InitGL(int argc, char* argv[])
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
-	InitGL(argc, argv);
 
 	InitObjects();
+
+	InitGL(argc, argv);
 
 	glutMainLoop();
 }
@@ -99,7 +100,7 @@ void HelloGL::Display()
 		camera->up.x, camera->up.y, camera->up.z
 	);
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 999; i++)
 	{
 		objects[i]->Draw();
 	}
@@ -140,7 +141,7 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 999; i++)
 	{
 		objects[i]->Update();
 

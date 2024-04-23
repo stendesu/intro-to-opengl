@@ -5,14 +5,6 @@
 
 using namespace std;
 
-Vertex* indexedVertices = nullptr;
-Color* indexedColors = nullptr;
-GLushort* indices = nullptr;
-
-int numVertices = 0;
-int numColors = 0;
-int numIndices = 0;
-
 namespace MeshLoader
 {
 	void LoadVertices(ifstream& inFile, Mesh& mesh);
@@ -38,21 +30,21 @@ namespace MeshLoader
 
 	void LoadColours(ifstream& inFile, Mesh& mesh)
 	{
-		inFile >> numColors;
-		indexedColors = new Color[numColors];
-		for (int i = 0; i < numColors; i++)
+		inFile >> mesh.ColorCount;
+		mesh.Colors = new Color[mesh.ColorCount];
+		for (int i = 0; i < mesh.ColorCount; i++)
 		{
-			inFile >> indexedColors[i].r >> indexedColors[i].g >> indexedColors[i].b;
+			inFile >> mesh.Colors[i].r >> mesh.Colors[i].g >> mesh.Colors[i].b;
 		}
 	}
 
 	void LoadIndices(ifstream& inFile, Mesh& mesh)
 	{
-		inFile >> numIndices;
-		indices = new GLushort[numIndices];
-		for (int i = 0; i < numIndices; i++)
+		inFile >> mesh.IndexCount;
+		mesh.Indices = new GLushort[mesh.IndexCount];
+		for (int i = 0; i < mesh.IndexCount; i++)
 		{
-			inFile >> indices[i];
+			inFile >> mesh.Indices[i];
 		}
 
 	}
