@@ -69,10 +69,11 @@ namespace MeshLoader
 			std::cerr << "Can't open text file " << path << std::endl;
 		}
 
+		LoadVertices(inFile, *mesh);
+		LoadColours(inFile, *mesh);
+		LoadIndices(inFile, *mesh);
+
 		inFile.close();
-
-		//LOAD DATA USING METHODS ABOVE
-
 
 		return mesh;
 	}
