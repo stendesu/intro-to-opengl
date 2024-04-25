@@ -1,6 +1,6 @@
-#include "Cube.h"
+#include "Pyramid.h"
 
-Cube::Cube(Mesh* mesh, float x, float y, float z, float rot) : SceneObject(mesh)
+Pyramid::Pyramid(Mesh* mesh, float x, float y, float z, float rot) : SceneObject(mesh)
 {
 	_rotation = rot;
 	_position.x = x;
@@ -8,14 +8,14 @@ Cube::Cube(Mesh* mesh, float x, float y, float z, float rot) : SceneObject(mesh)
 	_position.z = z;
 
 }
-Cube::~Cube()
+Pyramid::~Pyramid()
 {
 
 }
 
-void Cube::Draw()
+void Pyramid::Draw()
 {
-	if (_mesh->Vertices != nullptr && _mesh->Colors != nullptr && _mesh->Indices != nullptr) 
+	if (_mesh->Vertices != nullptr && _mesh->Colors != nullptr && _mesh->Indices != nullptr)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -25,7 +25,7 @@ void Cube::Draw()
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
 		glRotatef(_rotation, 1.0f, 1.0f, 1.0f);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
+		glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -36,7 +36,7 @@ void Cube::Draw()
 		std::cout << "null" << std::endl;
 	}
 }
-void Cube::Update()
+void Pyramid::Update()
 {
 	_rotation += 1.0f;
 	if (_rotation >= 360.0f)
@@ -45,11 +45,11 @@ void Cube::Update()
 	}
 }
 
-Vector3 Cube::GetPosition()
+Vector3 Pyramid::GetPosition()
 {
 	return _position;
 }
-void Cube::SetPosition(float new_x, float new_y, float new_z)
+void Pyramid::SetPosition(float new_x, float new_y, float new_z)
 {
 	_position.x = new_x;
 	_position.y = new_y;

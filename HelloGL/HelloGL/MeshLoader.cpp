@@ -47,7 +47,7 @@ namespace MeshLoader
 	{
 		inFile >> mesh.IndexCount;
 
-		if (mesh.ColorCount > 0)
+		if (mesh.IndexCount > 0)
 		{
 			mesh.Indices = new GLushort[mesh.IndexCount];
 

@@ -8,6 +8,7 @@
 
 #include "Cube.h"
 #include "Teapot.h"
+#include "Pyramid.h"
 
 #include "Structures.h"
 

@@ -11,7 +11,7 @@
 
 #include "SceneObject.h"
 
-class Cube : public SceneObject
+class Pyramid : public SceneObject
 {
 private:
 	GLfloat _rotation;
@@ -19,13 +19,15 @@ private:
 
 	static int numVertices, numColors, numIndices;
 public:
-	Cube(Mesh* mesh, float x, float y, float z, float rot);
-	~Cube();
+	Pyramid(Mesh* mesh, float x, float y, float z, float rot);
+	~Pyramid();
 
 	void Draw();
 	void Update();
 
 	Vector3 GetPosition();
 	void SetPosition(float new_x, float new_y, float new_z);
+
+	static bool Load(char* path);
 };
 
