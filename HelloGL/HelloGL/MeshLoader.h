@@ -5,11 +5,13 @@
 #include "GL\freeglut.h"
 #include "Structures.h"
 
+#include <vector>
+#include <string>
+#include <sstream>
+
 #include <iostream>
 #include <fstream>
 #include <cerrno>
-
-#include "Structures.h"
 
 namespace MeshLoader
 {

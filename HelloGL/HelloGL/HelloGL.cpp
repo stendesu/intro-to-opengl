@@ -10,26 +10,28 @@ void HelloGL::InitObjects()
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
-	//Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
-
-	//for (int i = 0; i < 999; i++)
-	//{
-	//	objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	//}
-
-	Mesh* pyramidMesh = MeshLoader::Load((char*)"data/pyramid.txt");
+	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
 	for (int i = 0; i < 999; i++)
 	{
-		objects[i] = new Pyramid(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
+
+	//Mesh* pyramidMesh = MeshLoader::Load((char*)"data/pyramid.txt");
+
+	//for (int i = 0; i < 999; i++)
+	//{
+	//	objects[i] = new Pyramid(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+	//}
+
+
+
+	//Teapot::Load((char*)"data/teapot.obj");
 
 	//for (int i = 0; i < 200; i++)
 	//{
 	//	teapot[i] = new Teapot(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	//}
-
-	//Teapot::Load((char*)"data/teapot.obj");
 }
 void HelloGL::InitGL(int argc, char* argv[])
 {

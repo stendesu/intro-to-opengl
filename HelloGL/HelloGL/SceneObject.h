@@ -9,18 +9,19 @@
 #include <fstream>
 #include <cerrno>
 
-#include "Structures.h"
+#include "Texture2D.h"
 
 class SceneObject
 {
 protected:
 	Mesh* _mesh;
+	Texture2D* _texture;
 
 	GLfloat _rotation;
 	Vector3 _position;
 
 public:
-	SceneObject(Mesh* mesh);
+	SceneObject(Mesh* mesh, Texture2D* texture);
 	virtual ~SceneObject();
 
 	virtual void Update();

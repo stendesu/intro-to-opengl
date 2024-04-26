@@ -26,4 +26,12 @@ struct Mesh
 	Color* Colors;
 	GLushort* Indices;
 	int VertexCount, ColorCount, IndexCount;
+
+	TexCoord* TexCoords;
+	int TexCoordCount;
+};
+
+struct TexCoord
+{
+	GLfloat u, v;
 };

@@ -58,19 +58,43 @@ namespace MeshLoader
 		}
 	}
 
+	void LoadTexCoords(ifstream& inFile, Mesh& mesh)
+	{
+		vector<TexCoord> texCoords;
+		string line;
+		while (getline(inFile, line)) {
+			istringstream iss(line);
+			string type;
+			iss >> type;
+			if (type == "vt") {
+				TexCoord texCoord;
+				iss >> texCoord.u >> texCoord.v;
+				texCoords.push_back(texCoord);
+			}
+		}
+
+		mesh.TexCoords = new TexCoord[texCoords.size()];
+		mesh.TexCoordCount = texCoords.size();
+		copy(texCoords.begin(), texCoords.end(), mesh.TexCoords);
+	}
+
 	Mesh* MeshLoader::Load(char* path)
 	{
 		Mesh* mesh = new Mesh();
 
-		std::ifstream inFile;
+		ifstream inFile;
 		inFile.open(path);
 		if (!inFile.good())
 		{
-			std::cerr << "Can't open text file " << path << std::endl;
+			cerr << "Can't open text file " << path << endl;
+			return nullptr;
 		}
 
 		LoadVertices(inFile, *mesh);
 		LoadColours(inFile, *mesh);
+
+		LoadTexCoords(inFile, *mesh);
+
 		LoadIndices(inFile, *mesh);
 
 		inFile.close();
