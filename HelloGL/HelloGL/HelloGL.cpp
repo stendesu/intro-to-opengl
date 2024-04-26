@@ -14,7 +14,7 @@ void HelloGL::InitObjects()
 
 	for (int i = 0; i < 999; i++)
 	{
-		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+		objects[i] = new Cube(cubeMesh, Texture2D, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
 	//Mesh* pyramidMesh = MeshLoader::Load((char*)"data/pyramid.txt");

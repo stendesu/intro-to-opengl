@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z, float rot) : SceneObject(mesh)
+Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z, float rot) : SceneObject(mesh, texture)
 {
 	_rotation = rot;
 	_position.x = x;
