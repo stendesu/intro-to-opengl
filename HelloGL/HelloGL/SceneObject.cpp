@@ -1,8 +1,10 @@
 #include "SceneObject.h"
+#include "Texture2D.h"
 
 SceneObject::SceneObject(Mesh* mesh, Texture2D* texture)
 {
 	_mesh = mesh;
+	_texture = texture;
 	
 	_position.x, _position.y, _position.z = 0;
 	_rotation = 0;

@@ -1,6 +1,8 @@
 #include "HelloGL.h"
 #include "Structures.h"
 #include "MeshLoader.h"
+#include "SceneObject.h"
+#include "Texture2D.h"
 
 void HelloGL::InitObjects()
 {
@@ -13,7 +15,7 @@ void HelloGL::InitObjects()
 	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
 	Texture2D* texture = new Texture2D();
-	texture->Load((char*)"data/Penguin.raw", 512, 512);
+	texture->Load((char*)"data/Penguins.raw", 512, 512);
 
 	for (int i = 0; i < 999; i++)
 	{
@@ -65,10 +67,9 @@ void HelloGL::InitGL(int argc, char* argv[])
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
+	InitGL(argc, argv);
 
 	InitObjects();
-
-	InitGL(argc, argv);
 
 	glutMainLoop();
 }

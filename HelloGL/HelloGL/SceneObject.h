@@ -9,7 +9,7 @@
 #include <fstream>
 #include <cerrno>
 
-#include "Texture2D.h"
+class Texture2D;
 
 class SceneObject
 {

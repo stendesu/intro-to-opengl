@@ -41,6 +41,21 @@ namespace MeshLoader
 		}
 	}
 
+	void LoadTexCoords(ifstream& inFile, Mesh& mesh)
+	{
+		inFile >> mesh.TexCoordCount;
+
+		if (mesh.TexCoordCount > 0)
+		{
+			mesh.TexCoords = new TexCoord[mesh.TexCoordCount];
+
+			for (int i = 0; i < mesh.TexCoordCount; i++)
+			{
+				inFile >> mesh.TexCoords[i].u >> mesh.TexCoords[i].v;
+			}
+		}
+	}
+
 	void LoadIndices(ifstream& inFile, Mesh& mesh)
 	{
 		inFile >> mesh.IndexCount;
@@ -56,25 +71,7 @@ namespace MeshLoader
 		}
 	}
 
-	void LoadTexCoords(ifstream& inFile, Mesh& mesh)
-	{
-		vector<TexCoord> texCoords;
-		string line;
-		while (getline(inFile, line)) {
-			istringstream iss(line);
-			string type;
-			iss >> type;
-			if (type == "vt") {
-				TexCoord texCoord;
-				iss >> texCoord.u >> texCoord.v;
-				texCoords.push_back(texCoord);
-			}
-		}
 
-		mesh.TexCoords = new TexCoord[texCoords.size()];
-		mesh.TexCoordCount = texCoords.size();
-		copy(texCoords.begin(), texCoords.end(), mesh.TexCoords);
-	}
 
 	Mesh* MeshLoader::Load(char* path)
 	{
