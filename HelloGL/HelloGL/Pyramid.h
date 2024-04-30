@@ -28,6 +28,6 @@ public:
 	Vector3 GetPosition();
 	void SetPosition(float new_x, float new_y, float new_z);
 
-	static bool Load(char* path);
+	//static bool Load(char* path);
 };
 

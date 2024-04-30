@@ -1,4 +1,8 @@
 #pragma once
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GlU.h>
+#include "GL/freeglut.h"
 
 struct Vector3
 {
@@ -20,18 +24,18 @@ struct Vertex
 	GLfloat x, y, z;
 };
 
+struct TexCoord
+{
+	GLfloat u, v;
+};
+
 struct Mesh
 {
 	Vertex* Vertices;
 	Color* Colors;
 	GLushort* Indices;
-	int VertexCount, ColorCount, IndexCount;
-
 	TexCoord* TexCoords;
-	int TexCoordCount;
+	int VertexCount, ColorCount, IndexCount, TexCoordCount;
 };
 
-struct TexCoord
-{
-	GLfloat u, v;
-};
+

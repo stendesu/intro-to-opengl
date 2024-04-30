@@ -12,9 +12,12 @@ void HelloGL::InitObjects()
 
 	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
+	Texture2D* texture = new Texture2D();
+	texture->Load((char*)"data/Penguin.raw", 512, 512);
+
 	for (int i = 0; i < 999; i++)
 	{
-		objects[i] = new Cube(cubeMesh, Texture2D, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
 	//Mesh* pyramidMesh = MeshLoader::Load((char*)"data/pyramid.txt");
@@ -52,6 +55,7 @@ void HelloGL::InitGL(int argc, char* argv[])
 	gluPerspective(45, 1, 1, 1000);;
 	glMatrixMode(GL_MODELVIEW);
 
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glCullFace(GL_BACK);

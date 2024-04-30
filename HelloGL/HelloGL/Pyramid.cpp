@@ -1,6 +1,6 @@
 #include "Pyramid.h"
 
-Pyramid::Pyramid(Mesh* mesh, Texture2D* texture, float x, float y, float z, float rot) : SceneObject(mesh, texture)
+Pyramid::Pyramid(Mesh* mesh, Texture2D* texture, float x, float y, float z, float rot) : SceneObject(mesh, nullptr)
 {
 	_rotation = rot;
 	_position.x = x;
