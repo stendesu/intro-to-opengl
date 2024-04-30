@@ -26,20 +26,35 @@ namespace MeshLoader
 		}
 	}
 
-	void LoadColours(ifstream& inFile, Mesh& mesh)
-	{
-		inFile >> mesh.ColorCount;
+	//void LoadColours(ifstream& inFile, Mesh& mesh)
+	//{
+	//	inFile >> mesh.ColorCount;
 
-		if (mesh.ColorCount > 0)
-		{
-			mesh.Colors = new Color[mesh.ColorCount];
+	//	if (mesh.ColorCount > 0)
+	//	{
+	//		mesh.Colors = new Color[mesh.ColorCount];
 
-			for (int i = 0; i < mesh.ColorCount; i++)
-			{
-				inFile >> mesh.Colors[i].r >> mesh.Colors[i].g >> mesh.Colors[i].b;
-			}
-		}
-	}
+	//		for (int i = 0; i < mesh.ColorCount; i++)
+	//		{
+	//			inFile >> mesh.Colors[i].r >> mesh.Colors[i].g >> mesh.Colors[i].b;	
+	//		}
+	//	}
+	//}
+
+	//void LoadNormals(ifstream& inFile, Mesh& mesh)
+	//{
+	//	inFile >> mesh.NormalCount;
+
+	//	if (mesh.NormalCount > 0)
+	//	{
+	//		mesh.NormalCount = new Normal[mesh.NormalCount];
+
+	//		for (int i = 0; i < mesh.NormalCount; i++)
+	//		{
+	//			inFile >> mesh.
+	//		}
+	//	}
+	//}
 
 	void LoadTexCoords(ifstream& inFile, Mesh& mesh)
 	{
@@ -86,7 +101,7 @@ namespace MeshLoader
 		}
 
 		LoadVertices(inFile, *mesh);
-		LoadColours(inFile, *mesh);
+		//LoadColours(inFile, *mesh);
 
 		LoadTexCoords(inFile, *mesh);
 

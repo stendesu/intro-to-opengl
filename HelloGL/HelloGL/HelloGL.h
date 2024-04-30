@@ -23,10 +23,14 @@ private:
 	Camera* camera;
 	SceneObject* objects[1000];
 	Teapot* teapot[200];
+
+	Vector4* _lightPosition;
+	Lighting* _lightData;
 public:
 
 	void InitObjects();
 	void InitGL(int argc, char* argv[]);
+	void InitLighting();
 
 	HelloGL(int argc, char* argv[]);
 

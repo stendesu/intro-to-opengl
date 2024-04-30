@@ -57,6 +57,8 @@ void HelloGL::InitGL(int argc, char* argv[])
 	gluPerspective(45, 1, 1, 1000);;
 	glMatrixMode(GL_MODELVIEW);
 
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -65,11 +67,38 @@ void HelloGL::InitGL(int argc, char* argv[])
 
 }
 
+void HelloGL::InitLighting()
+{
+	_lightPosition = new Vector4();
+	_lightPosition->x = 0.0f;
+	_lightPosition->y = 0.0f;
+	_lightPosition->z = 1.0f;
+	_lightPosition->w = 0.0f;
+
+	_lightData = new Lighting();
+	_lightData->Ambient.x = 0.2;
+	_lightData->Ambient.y = 0.2;
+	_lightData->Ambient.z = 0.2;
+	_lightData->Ambient.w = 1.0;
+
+	_lightData->Diffuse.x = 0.8;
+	_lightData->Diffuse.y = 0.8;
+	_lightData->Diffuse.z = 0.8;
+	_lightData->Diffuse.w = 1.0;
+
+	_lightData->Specular.x = 0.2;
+	_lightData->Specular.y = 0.2;
+	_lightData->Specular.z = 0.2;
+	_lightData->Specular.w = 1.0;
+}
+
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	InitGL(argc, argv);
 
 	InitObjects();
+
+	InitLighting();
 
 	glutMainLoop();
 }
@@ -123,6 +152,9 @@ void HelloGL::DrawWire()
 void HelloGL::Update()
 {
 	glLoadIdentity();
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
+	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
 	for (int i = 0; i < 999; i++)
 	{

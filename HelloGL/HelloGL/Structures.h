@@ -35,6 +35,11 @@ struct Color
 	GLfloat r, g, b;
 };
 
+struct Normal
+{
+	GLfloat x, y, z;
+};
+
 struct Vertex
 {
 	GLfloat x, y, z;
