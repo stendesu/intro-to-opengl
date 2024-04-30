@@ -48,9 +48,10 @@ struct TexCoord
 struct Mesh
 {
 	Vertex* Vertices;
-	Color* Colors;
+	Vector3* Normals;
 	GLushort* Indices;
 	TexCoord* TexCoords;
-	int VertexCount, ColorCount, IndexCount, TexCoordCount;
+	
+	int VertexCount, NormalCount, IndexCount, TexCoordCount;
 };
 
