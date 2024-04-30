@@ -107,7 +107,6 @@ namespace MeshLoader
 		LoadVertices(inFile, *mesh);
 		//LoadColours(inFile, *mesh);
 
-
 		LoadTexCoords(inFile, *mesh);
 
 		LoadNormals(inFile, *mesh);
