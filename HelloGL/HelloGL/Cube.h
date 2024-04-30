@@ -17,13 +17,17 @@ private:
 	GLfloat _rotation;
 	Vector3 _position;
 
-	static int numVertices, numColors, numIndices;
+	Material* _material;
+
+	static int numVertices, numNormals, numColors, numIndices;
 public:
 	Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z, float rot);
 	~Cube();
 
 	void Draw();
 	void Update();
+
+	void InitMaterial();
 
 	Vector3 GetPosition();
 	void SetPosition(float new_x, float new_y, float new_z);

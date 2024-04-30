@@ -53,7 +53,7 @@ struct TexCoord
 struct Mesh
 {
 	Vertex* Vertices;
-	Vector3* Normals;
+	Normal* Normals;
 	GLushort* Indices;
 	TexCoord* TexCoords;
 	
