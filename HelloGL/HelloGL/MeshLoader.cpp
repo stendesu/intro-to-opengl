@@ -21,9 +21,7 @@ namespace MeshLoader
 
 			for (int i = 0; i < mesh.VertexCount; i++)
 			{
-				inFile >> mesh.Vertices[i].x;
-				inFile >> mesh.Vertices[i].y;
-				inFile >> mesh.Vertices[i].z;
+				inFile >> mesh.Vertices[i].x >> mesh.Vertices[i].y >> mesh.Vertices[i].z;
 			}
 		}
 	}

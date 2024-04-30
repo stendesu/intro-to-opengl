@@ -6,6 +6,7 @@
 #include "GLUTCallbacks.h"
 #include <iostream>
 
+#include "SceneObject.h"
 #include "Cube.h"
 #include "Teapot.h"
 #include "Pyramid.h"
