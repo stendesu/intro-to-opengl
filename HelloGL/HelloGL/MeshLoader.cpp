@@ -41,20 +41,20 @@ namespace MeshLoader
 	//	}
 	//}
 
-	//void LoadNormals(ifstream& inFile, Mesh& mesh)
-	//{
-	//	inFile >> mesh.NormalCount;
+	void LoadNormals(ifstream& inFile, Mesh& mesh)
+	{
+		inFile >> mesh.NormalCount;
 
-	//	if (mesh.NormalCount > 0)
-	//	{
-	//		mesh.NormalCount = new Normal[mesh.NormalCount];
+		if (mesh.NormalCount > 0)
+		{
+			mesh.NormalCount = new Normal[mesh.NormalCount];
 
-	//		for (int i = 0; i < mesh.NormalCount; i++)
-	//		{
-	//			inFile >> mesh.
-	//		}
-	//	}
-	//}
+			for (int i = 0; i < mesh.NormalCount; i++)
+			{
+				inFile >> mesh.Normals[i].x >> mesh.Normals[i].y >> mesh.Normals[i].z;
+			}
+		}
+	}
 
 	void LoadTexCoords(ifstream& inFile, Mesh& mesh)
 	{

@@ -39,7 +39,7 @@ void Cube::Draw()
 	}
 	else
 	{
-		std::cout << "null" << std::endl;
+		std::cout << "null cube" << std::endl;
 	}
 }
 void Cube::Update()
