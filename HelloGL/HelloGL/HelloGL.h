@@ -42,6 +42,10 @@ public:
 
 	void Keyboard(unsigned char key, int x, int y);
 
+	void Draw();
+
+	void DrawString(const char* text, Vector3* position, Color* color);
+
 	void DrawWire();
 
 	void Reshape(int width, int height);

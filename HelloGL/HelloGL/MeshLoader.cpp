@@ -54,9 +54,7 @@ namespace MeshLoader
 				inFile >> mesh.Normals[i].x;
 				inFile >> mesh.Normals[i].y;
 				inFile >> mesh.Normals[i].z;
-
 			}
-			//std::cout << mesh.NormalCount << std::endl;
 		}
 	}
 

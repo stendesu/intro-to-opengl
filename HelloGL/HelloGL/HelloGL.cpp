@@ -8,7 +8,7 @@ void HelloGL::InitObjects()
 {
 	rotation = 0.0f;
 	camera = new Camera();
-	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = 5.0f;
+	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = -5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
@@ -17,7 +17,7 @@ void HelloGL::InitObjects()
 	Texture2D* texture = new Texture2D();
 	texture->Load((char*)"data/Penguins.raw", 512, 512);
 
-	for (int i = 0; i < 999; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
@@ -103,6 +103,26 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glutMainLoop();
 }
 
+void HelloGL::Draw()
+{
+	Vector3 v = { -1.4f, 0.7f, -1.0f };
+	Color c = { 0.0f, 1.0f, 0.0f };
+	DrawString("OPENGL PROJECT", &v, &c);
+}
+
+void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
+{
+	glPushMatrix();
+
+	glTranslatef(position->x, position->y, position->z);
+	glRasterPos2f(0.0f, 0.0f);
+	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+
+	glPopMatrix();
+	std::cout << " draw text " << std::endl;
+
+}
+
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -112,7 +132,9 @@ void HelloGL::Display()
 		camera->up.x, camera->up.y, camera->up.z
 	);
 
-	for (int i = 0; i < 999; i++)
+	Draw();
+
+	for (int i = 0; i < 200; i++)
 	{
 		objects[i]->Draw();
 	}
@@ -156,7 +178,9 @@ void HelloGL::Update()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
-	for (int i = 0; i < 999; i++)
+
+
+	for (int i = 0; i < 200; i++)
 	{
 		objects[i]->Update();
 
