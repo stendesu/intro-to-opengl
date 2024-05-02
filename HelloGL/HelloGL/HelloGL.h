@@ -26,6 +26,11 @@ private:
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;
+
+	bool looking_left;
+	bool looking_right;
+	bool looking_up;
+	bool looking_down;
 public:
 
 	void InitObjects();
@@ -45,6 +50,12 @@ public:
 	void Draw();
 
 	void DrawString(const char* text, Vector3* position, Color* color);
+
+	void YawCam(float angle);
+
+	void PitchCam(float distance);
+
+	void CheckCamConditions();
 
 	void DrawWire();
 

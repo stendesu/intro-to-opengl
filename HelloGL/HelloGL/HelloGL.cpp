@@ -8,7 +8,7 @@ void HelloGL::InitObjects()
 {
 	rotation = 0.0f;
 	camera = new Camera();
-	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = -5.0f;
+	camera->eye.x = 2.0f; camera->eye.y = 2.0f; camera->eye.z = 0.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
@@ -22,21 +22,6 @@ void HelloGL::InitObjects()
 		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	}
 
-	//Mesh* pyramidMesh = MeshLoader::Load((char*)"data/pyramid.txt");
-
-	//for (int i = 0; i < 999; i++)
-	//{
-	//	objects[i] = new Pyramid(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	//}
-
-
-
-	//Teapot::Load((char*)"data/teapot.obj");
-
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	teapot[i] = new Teapot(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	//}
 }
 void HelloGL::InitGL(int argc, char* argv[])
 {
@@ -100,6 +85,12 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	InitLighting();
 
+	looking_left = false;
+	looking_right = false;
+	looking_up = false;
+	looking_down = false;
+	//glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+
 	glutMainLoop();
 }
 
@@ -107,7 +98,7 @@ void HelloGL::Draw()
 {
 	Vector3 v = { -1.4f, 0.7f, -1.0f };
 	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("OPENGL PROJECT", &v, &c);
+	DrawString("[OPENGL PROJECT]", &v, &c);
 }
 
 void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
@@ -119,7 +110,6 @@ void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
 
 	glPopMatrix();
-	std::cout << " draw text " << std::endl;
 
 }
 
@@ -175,10 +165,10 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 
+	//CheckCamConditions();
+
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
-
-
 
 	for (int i = 0; i < 200; i++)
 	{
@@ -190,22 +180,55 @@ void HelloGL::Update()
 			objects[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		}
 	}
-
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	teapot[i]->Update();
-
-	//	teapot[i]->SetPosition(teapot[i]->GetPosition().x, teapot[i]->GetPosition().y, teapot[i]->GetPosition().z + 0.1f);
-	//	if (teapot[i]->GetPosition().z > camera->eye.z)
-	//	{
-	//		teapot[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-	//	}
-	//}
 	glutPostRedisplay();
+}
+
+void HelloGL::YawCam(float angle)
+{
+	float cosTheta = cos(angle);
+	float sinTheta = sin(angle);
+	float newX = (camera->eye.x - camera->center.x) * cosTheta - (camera->eye.z - camera->center.z) * sinTheta + camera->center.x;
+	float newZ = (camera->eye.x - camera->center.x) * sinTheta + (camera->eye.z - camera->center.z) * cosTheta + camera->center.z;
+
+	camera->eye.x = newX;
+	camera->eye.z = newZ;
+}
+void HelloGL::PitchCam(float angle)
+{
+	float cosTheta = cos(angle);
+	float sinTheta = sin(angle);
+	float newY = (camera->eye.y - camera->center.y) * cosTheta - (camera->eye.z - camera->center.z) * sinTheta + camera->center.y;
+	float newZ = (camera->eye.y - camera->center.y) * sinTheta + (camera->eye.z - camera->center.z) * cosTheta + camera->center.z;
+
+	camera->eye.y = newY;
+	camera->eye.z = newZ;
+}
+
+void HelloGL::CheckCamConditions()
+{
+	float sensitivity = 0.05f;
+	if (looking_up)
+	{
+		PitchCam(-sensitivity);
+	}
+	if (looking_down)
+	{
+		PitchCam(sensitivity);
+	}
+	if (looking_right)
+	{
+		YawCam(sensitivity);
+	}
+	if (looking_left)
+	{
+		YawCam(-sensitivity);
+	}
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
+	float sensitivity = 0.1f;
+
 	switch (key)
 	{
 	case 'q':
@@ -216,23 +239,33 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 		rotation += -2.0f;
 		std::cout << "rotating anti clockwise" << std::endl;
 		break;
+
+////////////////////////////////////////////////////////////////
 	case 'w':
-		camera->eye.y += 0.5f;
+		//looking_up = true;
+		PitchCam(-sensitivity);
+
 		std::cout << "move camera up" << std::endl;
 		break;
 	case 'a':
-		camera->eye.x += 0.5f;
+		//looking_left = true;
+		YawCam(-sensitivity);
+
 		std::cout << "move camera left" << std::endl;
 		break;
 	case 's':
-		camera->eye.y += -0.5f;
+		//looking_down = true;
+		PitchCam(sensitivity);
+
 		std::cout << "move camera down" << std::endl;
 		break;
 	case 'd':
-		camera->eye.x += -0.5f;
+		//looking_right = true;
+		YawCam(sensitivity);
+
 		std::cout << "move camera right" << std::endl;
 		break;
-
+////////////////////////////////////////////////////////////////
 	case '1':
 		camera->eye.z += -0.5f;
 		break;
@@ -243,6 +276,12 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 
 	case GLUT_ACTIVE_SHIFT:
 		// code
+		break;
+	//default:
+	//	looking_left = false;
+	//	looking_right = false;
+	//	looking_up = false;
+	//	looking_down = false;
 		break;
 
 	}
