@@ -29,6 +29,7 @@ void Sky::Draw()
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
 		glRotatef(_rotation, 1.0f, 1.0f, 1.0f);
+		glScalef(512.0f, 512.0f, 512.0f);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
