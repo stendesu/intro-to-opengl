@@ -22,7 +22,7 @@ void HelloGL::InitObjects()
 	//	objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
 	//}
 
-	Mesh* skyMesh = MeshLoader::Load((char*)"data/cube.txt");
+	Mesh* skyMesh = MeshLoader::Load((char*)"data/sky.txt");
 
 	Texture2D* skyTexture = new Texture2D();
 	skyTexture->Load((char*)"data/stars.raw", 512, 512);

@@ -3,9 +3,9 @@
 
 Sky::Sky(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject(mesh, texture)
 {
-	//InitMaterial();
-	//glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->Ambient.x));
-	//glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
+	InitMaterial();
+	glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->Ambient.x));
+	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
 
 }
 Sky::~Sky()
