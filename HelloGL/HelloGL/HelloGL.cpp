@@ -12,15 +12,22 @@ void HelloGL::InitObjects()
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
-	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
+	//Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
 
-	Texture2D* texture = new Texture2D();
-	texture->Load((char*)"data/Penguins.raw", 512, 512);
+	//Texture2D* texture = new Texture2D();
+	//texture->Load((char*)"data/stars.raw", 512, 512);
 
-	for (int i = 0; i < 200; i++)
-	{
-		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
-	}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, (rand() % 1000) / 10.0f, (rand() % 500));
+	//}
+
+	Mesh* skyMesh = MeshLoader::Load((char*)"data/cube.txt");
+
+	Texture2D* skyTexture = new Texture2D();
+	skyTexture->Load((char*)"data/stars.raw", 512, 512);
+
+	sky = new Sky(skyMesh, skyTexture, 0, 0, 0);
 
 }
 void HelloGL::InitGL(int argc, char* argv[])
@@ -94,13 +101,6 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glutMainLoop();
 }
 
-void HelloGL::Draw()
-{
-	Vector3 v = { -1.4f, 0.7f, -1.0f };
-	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("[OPENGL PROJECT]", &v, &c);
-}
-
 void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
 {
 	glPushMatrix();
@@ -122,17 +122,16 @@ void HelloGL::Display()
 		camera->up.x, camera->up.y, camera->up.z
 	);
 
-	Draw();
-
-	for (int i = 0; i < 200; i++)
-	{
-		objects[i]->Draw();
-	}
+	Vector3 v = { -1.4f, 0.7f, -1.0f };
+	Color c = { 0.0f, 1.0f, 0.0f };
+	DrawString("[OPENGL PROJECT]", &v, &c);
 
 	//for (int i = 0; i < 200; i++)
 	//{
-	//	teapot[i]->Draw();
+	//	objects[i]->Draw();
 	//}
+	
+	sky->Draw();
 
 	glFlush();
 	glutSwapBuffers();
@@ -170,16 +169,19 @@ void HelloGL::Update()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
-	for (int i = 0; i < 200; i++)
-	{
-		objects[i]->Update();
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	objects[i]->Update();
 
-		objects[i]->SetPosition(objects[i]->GetPosition().x, objects[i]->GetPosition().y, objects[i]->GetPosition().z + 0.1f);
-		if (objects[i]->GetPosition().z > camera->eye.z)
-		{
-			objects[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-		}
-	}
+	//	objects[i]->SetPosition(objects[i]->GetPosition().x, objects[i]->GetPosition().y, objects[i]->GetPosition().z + 0.1f);
+	//	if (objects[i]->GetPosition().z > camera->eye.z)
+	//	{
+	//		objects[i]->SetPosition(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	//	}
+	//}
+
+	sky->Update();
+
 	glutPostRedisplay();
 }
 

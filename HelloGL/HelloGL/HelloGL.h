@@ -11,6 +11,7 @@ class SceneObject;
 #include "Cube.h"
 #include "Teapot.h"
 #include "Pyramid.h"
+#include "Sky.h"
 
 #include "Structures.h"
 
@@ -22,6 +23,7 @@ private:
 	float rotation;
 	Camera* camera;
 	SceneObject* objects[1000];
+	SceneObject* sky;
 	Teapot* teapot[200];
 
 	Vector4* _lightPosition;
