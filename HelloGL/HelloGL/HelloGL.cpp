@@ -103,6 +103,8 @@ void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
 
 }
 
+
+
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -111,6 +113,7 @@ void HelloGL::Display()
 		camera->center.x, camera->center.y, camera->center.z,
 		camera->up.x, camera->up.y, camera->up.z
 	);
+
 
 	Vector3 v = { -1.4f, 0.7f, -1.0f };
 	Color c = { 0.0f, 1.0f, 0.0f };
