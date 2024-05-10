@@ -36,7 +36,7 @@ void HelloGL::InitGL(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, 800, 800);
-	gluPerspective(45, 1, 1, 2000);
+	gluPerspective(60, 1, 0.1, 9000);
 	glMatrixMode(GL_MODELVIEW);
 
 	glEnable(GL_LIGHTING);
