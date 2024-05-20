@@ -13,11 +13,16 @@ void HelloGL::InitObjects()
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
 	Mesh* skyMesh = MeshLoader::Load((char*)"data/sky.txt");
-
 	Texture2D* skyTexture = new Texture2D();
 	skyTexture->Load((char*)"data/stars.raw", 512, 512);
-
 	sky = new Sky(skyMesh, skyTexture, 0, 0, 0);
+
+	Mesh* cubeMesh = MeshLoader::Load((char*)"data/cube.txt");
+	Texture2D* cubeTexture = new Texture2D();
+	cubeTexture->Load((char*)"data/penguins.raw", 512, 512);
+
+	cube1 = new Cube(cubeMesh, cubeTexture, 0, 0, 0, 0);
+	cube2 = new Cube(cubeMesh, cubeTexture, 5, 0, 0, 0);
 
 }
 void HelloGL::InitGL(int argc, char* argv[])
@@ -126,6 +131,9 @@ void HelloGL::Display()
 	
 	sky->Draw();
 
+	cube1->Draw();
+	cube2->Draw();
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -174,6 +182,7 @@ void HelloGL::Update()
 	//}
 
 	sky->Update();
+	cube2->Update();
 
 	glutPostRedisplay();
 }
@@ -268,7 +277,28 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	case '2':
 		camera->eye.z += 0.5f;
 		break;
-
+////////////////////////////////////////////////////////////////
+	case 'i':
+		//up
+		cube2->SetZ(1);
+		break;
+	case 'k':
+		//down
+		cube2->SetZ(-1);
+		break;
+	case 'j':
+		//left
+		break;
+	case 'l':
+		//right
+		break;
+	case 'u':
+		//forward
+		break;
+	case 'o':
+		//backward
+		break;
+////////////////////////////////////////////////////////////////
 	case GLUT_ACTIVE_SHIFT:
 		// code
 		break;

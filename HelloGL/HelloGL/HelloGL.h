@@ -24,6 +24,8 @@ private:
 	Camera* camera;
 	SceneObject* objects[1000];
 	SceneObject* sky;
+	SceneObject* cube1;
+	SceneObject* cube2;
 	Teapot* teapot[200];
 
 	Vector4* _lightPosition;
@@ -49,7 +51,7 @@ public:
 
 	void Keyboard(unsigned char key, int x, int y);
 
-	void Draw();
+	//void Draw();
 
 	void DrawString(const char* text, Vector3* position, Color* color);
 

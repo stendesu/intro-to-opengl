@@ -31,5 +31,9 @@ public:
 
 	Vector3 GetPosition();
 	void SetPosition(float new_x, float new_y, float new_z);
+
+	void SetZ(float newZ) { _position.z += newZ; };
+	void SetX(float newX) { _position.x += newX; };
+	void SetY(float newY) { _position.y += newY; };
 };
 
