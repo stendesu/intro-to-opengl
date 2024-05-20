@@ -280,23 +280,27 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 ////////////////////////////////////////////////////////////////
 	case 'i':
 		//up
-		cube2->SetZ(1);
+		cube2->SetY(1);
 		break;
 	case 'k':
 		//down
-		cube2->SetZ(-1);
+		cube2->SetY(-1);
 		break;
 	case 'j':
 		//left
+		cube2->SetX(1);
 		break;
 	case 'l':
 		//right
+		cube2->SetX(-1);
 		break;
 	case 'u':
 		//forward
+		cube2->SetZ(1);
 		break;
 	case 'o':
 		//backward
+		cube2->SetZ(-1);
 		break;
 ////////////////////////////////////////////////////////////////
 	case GLUT_ACTIVE_SHIFT:
